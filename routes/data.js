@@ -30,9 +30,9 @@ router.get("/data10", (req, res) => {
 router.post("/data", (req, res) => {
   const data = new Data({
     timestamp: Date.now(),
-    temp: req.body.temp,
-    pH: req.body.pH,
-    cond: req.body.cond,
+    temp: req.query.temp,
+    pH: req.query.pH,
+    cond: req.query.cond,
   });
   data
     .save()
