@@ -1,4 +1,4 @@
-let Data = require("../models/DataModel");
+let Data = require("../models/dataModel");
 let express = require("express");
 let router = express.Router();
 
