@@ -40,6 +40,7 @@ router.post("/data", (req, res) => {
       return res.status(200).send({ message: "OK", data: doc });
     })
     .catch((err) => {
+      console.log(err);
       return res.status(404).send({ message: "Error", data: err });
     });
 });
