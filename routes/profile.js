@@ -74,7 +74,7 @@ router.post("/profile", (req, res) => {
     condHigh: req.body.condHigh,
   });
   profile
-    .save(
+    .save()
     .then((doc) => {
       res.status(200).send({ message: "OK", data: doc });
     })
