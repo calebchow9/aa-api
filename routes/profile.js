@@ -6,10 +6,48 @@ let router = express.Router();
 router.get("/profile", (req, res) => {
   Profile.find()
     .then((doc) => {
+      doc.splice(
+        doc.findIndex((obj) => {
+          obj.name == "current";
+        }),
+        1
+      );
       return res.status(200).send(doc);
     })
     .catch((err) => {
       res.status(404).send({ message: "Error", data: err });
+    });
+});
+
+// get current profile
+router.get("/profile/current", (req, res) => {
+  Profile.findOne({ name: "current" })
+    .then((doc) => {
+      return res.status(200).send(doc);
+    })
+    .catch((err) => {
+      res.status(404).send({ message: "Error", data: err });
+    });
+});
+
+// update current profile
+router.put("/profile/current", (req, res) => {
+  Profile.findOneAndUpdate(
+    { name: "current" },
+    {
+      tempLow: req.body.tempLow,
+      tempHigh: req.body.tempHigh,
+      phLow: req.body.phLow,
+      phHigh: req.body.phHigh,
+      condLow: req.body.condLow,
+      condHigh: req.body.condHigh,
+    }
+  )
+    .then((doc) => {
+      return res.status(200).send(doc);
+    })
+    .catch((err) => {
+      return res.status(404).send(err);
     });
 });
 
@@ -36,7 +74,7 @@ router.post("/profile", (req, res) => {
     condHigh: req.body.condHigh,
   });
   profile
-    .save()
+    .save(
     .then((doc) => {
       res.status(200).send({ message: "OK", data: doc });
     })
